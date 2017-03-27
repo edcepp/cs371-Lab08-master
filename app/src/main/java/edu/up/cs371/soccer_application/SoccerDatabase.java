@@ -18,6 +18,7 @@ import java.util.*;
  */
 public class SoccerDatabase implements SoccerDB {
 
+    Hashtable<String, SoccerPlayer> myPlayers = new Hashtable<String, SoccerPlayer>();
     /**
      * add a player
      *
@@ -26,7 +27,19 @@ public class SoccerDatabase implements SoccerDB {
     @Override
 	public boolean addPlayer(String firstName, String lastName,
 			int uniformNumber, String teamName) {
-        return false;
+        String player = new String (firstName+"##"+lastName);
+        if(myPlayers.get(player) == null){
+            // unnecessary check. Experimenting with the hashtable interface
+            if (myPlayers.put(player, new SoccerPlayer(firstName, lastName, uniformNumber, teamName)) == null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
 	}
 
     /**
@@ -36,7 +49,14 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean removePlayer(String firstName, String lastName) {
-        return false;
+        String player = new String(firstName + "##" + lastName);
+        if (myPlayers.remove(player) == null)
+        {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /**
@@ -45,9 +65,11 @@ public class SoccerDatabase implements SoccerDB {
      * @see SoccerDB#getPlayer(String, String)
      */
     @Override
-	public SoccerPlayer getPlayer(String firstName, String lastName) {
-        return null;
-    }
+    public SoccerPlayer getPlayer(String firstName, String lastName) {
+
+        String player = new String (firstName+"##"+lastName);
+        return myPlayers.get(player);
+       }
 
     /**
      * increment a player's goals
