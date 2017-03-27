@@ -78,7 +78,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpGoals(String firstName, String lastName) {
-        return false;
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpGoals();
+        return true;
     }
 
     /**
@@ -88,7 +93,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpAssists(String firstName, String lastName) {
-        return false;
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpAssists();
+        return true;
     }
 
     /**
@@ -98,7 +108,13 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpShots(String firstName, String lastName) {
-        return false;
+
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpShots();
+        return true;
     }
 
     /**
@@ -108,9 +124,14 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpSaves(String firstName, String lastName) {
-        return false;
-    }
 
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpSaves();
+        return true;
+    }
     /**
      * increment a player's fouls
      *
@@ -118,9 +139,14 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpFouls(String firstName, String lastName) {
-        return false;
-    }
 
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpFouls();
+        return true;
+    }
     /**
      * increment a player's yellow cards
      *
@@ -128,9 +154,14 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpYellowCards(String firstName, String lastName) {
-        return false;
-    }
 
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpYellowCards();
+        return true;
+    }
     /**
      * increment a player's red cards
      *
@@ -138,9 +169,14 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpRedCards(String firstName, String lastName) {
-        return false;
-    }
 
+        SoccerPlayer player = myPlayers.get(firstName + "##" + lastName);
+        if (player == null) {
+            return false;
+        }
+        player.bumpRedCards();
+        return true;
+    }
     /**
      * tells the number of players on a given team
      *
