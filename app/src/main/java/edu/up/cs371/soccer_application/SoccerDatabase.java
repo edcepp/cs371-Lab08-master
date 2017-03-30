@@ -5,6 +5,7 @@ import android.util.Log;
 import edu.up.cs371.soccer_application.soccerPlayer.SoccerPlayer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -266,8 +267,21 @@ public class SoccerDatabase implements SoccerDB {
 	// write data to file
     @Override
 	public boolean writeData(File file) {
-        return false;
-	}
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            Set<String> keys = myPlayers.keySet();
+            Iterator<String> dbIterator = keys.iterator();
+            while (dbIterator.hasNext()){
+                String playerName = dbIterator.next();
+                SoccerPlayer player = myPlayers.get(playerName);
+                writer.println(logString(player.getFirstName()));
+            }
+            return true;
+        }
+        catch (FileNotFoundException fnfe) {
+            return false;
+        }
+    }
 
     /**
      * helper method that logcat-logs a string, and then returns the string.
