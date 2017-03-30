@@ -278,6 +278,7 @@ public class SoccerDatabase implements SoccerDB {
 
                 reader.nextLine(); // read past the last line
             }
+            reader.close();
             return true;
         }
         catch (FileNotFoundException exception) {
