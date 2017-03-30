@@ -253,12 +253,38 @@ public class SoccerDatabase implements SoccerDB {
      *
      * @see SoccerDB#readData(java.io.File)
      */
-	// read data from file
+    // read data from file
     @Override
-	public boolean readData(File file) {
-        return file.exists();
-	}
+    public boolean readData(File file) {
+        try {
+            Scanner reader = new Scanner(file);
+            while(reader.hasNextLine()) {
+                String firstName = reader.nextLine();
+                String lastName = reader.nextLine();
+                String teamName = reader.nextLine();
+                int uniformNumber = reader.nextInt();
+                // logString(firstName + " " + lastName + " " + teamName + " " + uniformNumber);
+                String playerName = new String (firstName+"##"+lastName);
+                SoccerPlayer player = new SoccerPlayer(firstName, lastName, uniformNumber, teamName);
+                myPlayers.put(playerName, player);
 
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpGoals();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpAssists();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpShots();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpFouls();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpSaves();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpYellowCards();
+                for (int i = reader.nextInt(); i > 0; i--) player.bumpRedCards();
+
+                reader.nextLine(); // read past the last line
+            }
+            return true;
+        }
+        catch (FileNotFoundException exception) {
+            logString(exception.getMessage());
+            return false;
+        }
+    }
     /**
      * write database data to a file
      *
@@ -275,10 +301,22 @@ public class SoccerDatabase implements SoccerDB {
                 String playerName = dbIterator.next();
                 SoccerPlayer player = myPlayers.get(playerName);
                 writer.println(logString(player.getFirstName()));
+                writer.println(logString(player.getLastName()));
+                writer.println(logString(player.getTeamName()));
+                writer.println(logString(player.getUniform()+""));
+                writer.println(logString(player.getGoals()+""));
+                writer.println(logString(player.getAssists()+""));
+                writer.println(logString(player.getShots()+""));
+                writer.println(logString(player.getFouls()+""));
+                writer.println(logString(player.getSaves()+""));
+                writer.println(logString(player.getYellowCards()+""));
+                writer.println(logString(player.getRedCards()+""));
             }
+            writer.close();
             return true;
         }
-        catch (FileNotFoundException fnfe) {
+        catch (FileNotFoundException exception) {
+            logString(exception.getMessage());
             return false;
         }
     }
